@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wycliff Opere — Insurance Operations &amp; Product Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10241D;
+    --paper:#F5F1E7;
+    --paper-dim:#EBE5D3;
+    --forest:#0B3D2E;
+    --forest-deep:#082A20;
+    --gold:#B8892B;
+    --gold-bright:#D3A43C;
+    --teal:#1E8E7E;
+    --teal-deep:#146357;
+    --line:#D8CFB8;
+    --line-dark:#2C4A3E;
+    --maxw:920px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans',sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+  a{color:inherit;}
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+    *{scroll-behavior:auto !important;}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:
+      radial-gradient(circle at 85% -10%, rgba(211,164,60,0.14), transparent 45%),
+      linear-gradient(180deg, var(--forest) 0%, var(--forest-deep) 100%);
+    color:var(--paper);
+    padding:88px 0 64px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(245,241,231,0.035) 0px, rgba(245,241,231,0.035) 1px, transparent 1px, transparent 34px);
+    pointer-events:none;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--gold-bright);
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(40px,7vw,64px);
+    line-height:1.02;
+    color:var(--paper);
+  }
+  .hero .role-line{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(18px,2.6vw,24px);
+    color:var(--teal);
+    margin-top:14px;
+    max-width:640px;
+  }
+  .hero p.desc{
+    max-width:560px;
+    margin-top:22px;
+    color:rgba(245,241,231,0.78);
+    font-size:15.5px;
+  }
+  .stamp-row{
+    display:flex; gap:14px; flex-wrap:wrap;
+    margin-top:34px;
+  }
+  .stamp{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    border:1.5px solid;
+    border-radius:3px;
+    padding:9px 14px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transform:rotate(-1.4deg);
+    transition:transform .3s ease;
+  }
+  .stamp:nth-child(2){transform:rotate(1.1deg);}
+  .stamp.ops{border-color:var(--gold-bright); color:var(--gold-bright);}
+  .stamp.design{border-color:var(--teal); color:var(--teal);}
+  .stamp .dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+
+  .contact-row{
+    margin-top:40px;
+    display:flex; gap:22px; flex-wrap:wrap;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    color:rgba(245,241,231,0.65);
+  }
+  .contact-row a{text-decoration:none; border-bottom:1px solid rgba(211,164,60,0.5); padding-bottom:1px;}
+  .contact-row a:hover{color:var(--gold-bright); border-color:var(--gold-bright);}
+
+  /* ---------- Ledger intro strip ---------- */
+  .ledger-strip{
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    padding:52px 0;
+  }
+  .ledger-strip .grid{
+    display:grid;
+    grid-template-columns:120px 1fr;
+    gap:24px;
+  }
+  .ledger-strip .tab{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--forest);
+    opacity:.6;
+    padding-top:4px;
+  }
+  .ledger-strip p{
+    margin:0 0 14px;
+    font-size:16px;
+    max-width:640px;
+  }
+  .ledger-strip p:last-child{margin-bottom:0;}
+  @media (max-width:600px){
+    .ledger-strip .grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- Section shell ---------- */
+  section.block{padding:76px 0;}
+  .section-head{
+    display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;
+    margin-bottom:46px;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:18px;
+  }
+  .section-head .idx{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    color:var(--gold);
+    letter-spacing:.1em;
+  }
+  .section-head h2{font-size:clamp(26px,4vw,36px);}
+  .section-sub{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    color:#6b6250;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    margin-left:auto;
+  }
+
+  .ops-block{background:var(--paper);}
+  .design-block{
+    background:var(--forest);
+    color:var(--paper);
+  }
+  .design-block .section-head{border-bottom-color:rgba(245,241,231,0.4);}
+  .design-block .section-sub{color:rgba(245,241,231,0.5);}
+
+  /* ---------- Role register rows ---------- */
+  .role-row{
+    display:grid;
+    grid-template-columns:170px 1fr;
+    gap:22px;
+    padding:26px 0;
+    border-top:1px solid var(--line);
+  }
+  .role-row:last-child{border-bottom:1px solid var(--line);}
+  .design-block .role-row{border-color:rgba(245,241,231,0.18);}
+  .design-block .role-row:last-child{border-color:rgba(245,241,231,0.18);}
+  .role-row .when{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    color:var(--gold);
+    letter-spacing:.03em;
+    padding-top:3px;
+  }
+  .role-row h3{font-size:19px; margin-bottom:6px;}
+  .role-row .org{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    opacity:.6;
+    margin-bottom:10px;
+    display:block;
+  }
+  .role-row p{margin:0; font-size:15px; max-width:600px;}
+  .design-block .role-row p{color:rgba(245,241,231,0.82);}
+  @media (max-width:600px){
+    .role-row{grid-template-columns:1fr; gap:6px;}
+  }
+
+  /* ---------- Project cards (ops) ---------- */
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    margin-top:44px;
+  }
+  @media (max-width:640px){.card-grid{grid-template-columns:1fr;}}
+  .card{
+    background:var(--paper);
+    padding:28px 26px;
+  }
+  .card .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--teal-deep);
+    margin-bottom:10px;
+    display:block;
+  }
+  .card h4{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:18px;
+    margin:0 0 10px;
+  }
+  .card p{margin:0; font-size:14.5px; color:#3c372c;}
+
+  /* ---------- Case study ---------- */
+  .case-study{
+    margin-top:52px;
+    border:1px solid rgba(245,241,231,0.22);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .case-head{
+    padding:30px 30px 24px;
+    border-bottom:1px solid rgba(245,241,231,0.22);
+    background:rgba(245,241,231,0.03);
+  }
+  .case-head .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin-bottom:10px;
+    display:block;
+  }
+  .case-head h3{font-size:26px; color:var(--paper); margin-bottom:8px;}
+  .case-head .meta{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    color:rgba(245,241,231,0.55);
+  }
+  .case-body{padding:30px; display:grid; grid-template-columns:1.1fr .9fr; gap:36px;}
+  @media (max-width:720px){.case-body{grid-template-columns:1fr;}}
+  .case-col h5{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--gold-bright);
+    margin-bottom:10px;
+  }
+  .case-col p{font-size:14.5px; color:rgba(245,241,231,0.82); margin:0 0 16px;}
+  .case-col ul{margin:0; padding-left:18px; font-size:14.5px; color:rgba(245,241,231,0.82);}
+  .case-col li{margin-bottom:6px;}
+
+  /* Abstract phone-frame illustration (not literal screenshots) */
+  .phone-mock{
+    display:flex; gap:14px; margin-top:6px;
+  }
+  .phone{
+    width:84px; height:150px;
+    border:1.5px solid rgba(245,241,231,0.35);
+    border-radius:10px;
+    padding:8px 6px;
+    display:flex; flex-direction:column; gap:5px;
+    background:rgba(245,241,231,0.04);
+  }
+  .phone .bar{height:6px; border-radius:2px; background:rgba(245,241,231,0.25);}
+  .phone .bar.short{width:60%;}
+  .phone .bar.accent{background:var(--teal);}
+  .phone .tabs{margin-top:auto; display:flex; gap:3px;}
+  .phone .tabs span{flex:1; height:10px; border-radius:2px; background:rgba(245,241,231,0.15);}
+  .phone .tabs span.active{background:var(--gold-bright);}
+
+  /* ---------- Education / certs ledger ---------- */
+  .ed-row{
+    display:grid;
+    grid-template-columns:170px 1fr 110px;
+    gap:16px;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+    align-items:baseline;
+  }
+  .ed-row:last-child{border-bottom:1px solid var(--line);}
+  .ed-row .org{font-weight:600; font-family:'Fraunces',serif; font-size:16px;}
+  .ed-row .detail{font-size:14px; color:#4a4536;}
+  .ed-row .when{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--gold); text-align:right;}
+  @media (max-width:600px){
+    .ed-row{grid-template-columns:1fr; gap:2px;}
+    .ed-row .when{text-align:left;}
+  }
+
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:36px;}
+  .chip{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    padding:6px 12px;
+    border:1px solid var(--line);
+    border-radius:20px;
+    color:#4a4536;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    background:var(--forest-deep);
+    color:rgba(245,241,231,0.7);
+    padding:56px 0 40px;
+    text-align:center;
+  }
+  footer .stamp-mark{
+    display:inline-block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--gold-bright);
+    border:1px solid var(--gold-bright);
+    border-radius:3px;
+    padding:8px 16px;
+    transform:rotate(-1deg);
+    margin-bottom:18px;
+  }
+  footer .contact-row{justify-content:center; color:rgba(245,241,231,0.55);}
+  footer .fine{font-size:12px; margin-top:24px; color:rgba(245,241,231,0.35);}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Nairobi, Kenya — Old Mutual Kenya</div>
+    <h1>Wycliff Opere</h1>
+    <div class="role-line">Where insurance operations meets the interfaces built to run them.</div>
+    <p class="desc">Business Processing Officer handling KYC, underwriting documentation, and scheme administration by day — and a UX/UI designer building the tools and prototypes that make claims and product journeys easier to navigate.</p>
+    <div class="stamp-row">
+      <span class="stamp ops"><span class="dot"></span>Business Processing Officer</span>
+      <span class="stamp design"><span class="dot"></span>UX / UI Designer</span>
+    </div>
+    <div class="contact-row">
+      <a href="mailto:wycliffopereod@gmail.com">wycliffopereod@gmail.com</a>
+      <a href="https://linkedin.com/in/wycliff-opere" target="_blank" rel="noopener">linkedin.com/in/wycliff-opere</a>
+    </div>
+  </div>
+</header>
+
+<div class="ledger-strip">
+  <div class="wrap">
+    <div class="grid reveal">
+      <div class="tab">Profile</div>
+      <div>
+        <p>Insurance operations professional with a computer science background, currently serving as a Business Processing Officer at Old Mutual Kenya — handling KYC/AML compliance, premium processing, underwriting documentation review, and medical scheme onboarding. Four years prior spent in medical claims analysis, system evaluation, and process improvement.</p>
+        <p>Alongside that, works as a UX/UI designer on Old Mutual's product team: user research, journey mapping, wireframing, and prototyping for digital claims and customer platforms — technical grounding in SQL, Power BI, and Figma runs through both sides of the work.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="block ops-block">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="idx">01</span>
+      <h2>Insurance Operations</h2>
+      <span class="section-sub">Old Mutual Kenya</span>
+    </div>
+
+    <div class="role-row reveal">
+      <div class="when">Jul 2026 — Present</div>
+      <div>
+        <span class="org">Old Mutual Kenya Limited</span>
+        <h3>Business Processing Officer</h3>
+        <p>Ensures completeness of insurance documentation and KYC/AML compliance, processes scheme premiums against client invoices, reviews underwriting documentation, manages scheme membership changes, coordinates new medical scheme onboarding, and maintains renewal and card trackers.</p>
+      </div>
+    </div>
+    <div class="role-row reveal">
+      <div class="when">Sep 2022 — Jul 2026</div>
+      <div>
+        <span class="org">Old Mutual Kenya Limited</span>
+        <h3>Medical Claims Analyst</h3>
+        <p>Reviewed and processed general insurance claims, validated claims against policy and scheme guidelines, prepared reports on process efficiency and cost-saving measures, and supported provider-facing electronic claims transmission.</p>
+      </div>
+    </div>
+
+    <div class="card-grid reveal">
+      <div class="card">
+        <span class="tag">Reporting tool</span>
+        <h4>Claims Performance Dashboard</h4>
+        <p>Browser-based reporting tool computing revenue-cycle KPIs — clean claim rate, denial rate, days in AR, net collection rate — with AI-generated executive summaries via the Anthropic API.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Analytics</span>
+        <h4>Inpatient Claims Dashboards</h4>
+        <p>Segmented Overall / Ex-PSC / PSC-Only portfolio views across 2024–2026, plus claims reconciliation trackers built to the Old Mutual brand palette.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Knowledge transfer</span>
+        <h4>EDI Claims Analyst Training</h4>
+        <p>Structured workbook covering transmission frequency, systems, escalation contacts, and SLA targets — built as onboarding material for new EDI claims analysts.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Automation</span>
+        <h4>Leave Schedule Tracker</h4>
+        <p>Excel-based tracker with VBA/Outlook macro automation, sending scheduled leave notifications to line managers via Windows Task Scheduler.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block design-block">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="idx">02</span>
+      <h2>Product &amp; UX Design</h2>
+      <span class="section-sub">Old Mutual Kenya</span>
+    </div>
+
+    <div class="role-row reveal">
+      <div class="when">Sep 2025 — Present</div>
+      <div>
+        <span class="org">Old Mutual Kenya Limited</span>
+        <h3>UX / UI Designer</h3>
+        <p>Conducts user research and usability testing to inform design decisions; builds personas, journey maps, wireframes, and interactive prototypes in Figma; collaborates with product and engineering in agile teams; iterates on feedback and data to keep digital products usable, accessible, and consistent.</p>
+      </div>
+    </div>
+
+    <div class="case-study reveal">
+      <div class="case-head">
+        <span class="tag">Case study</span>
+        <h3>Thrive Daily Split Wallet</h3>
+        <div class="meta">Mobile fintech prototype · Old Mutual Thrive Kenya</div>
+      </div>
+      <div class="case-body">
+        <div class="case-col">
+          <h5>What it is</h5>
+          <p>A full interactive mobile prototype for Old Mutual Thrive Kenya, simulating M-Pesa-based income splitting across budget categories the user defines themselves — built as a self-contained HTML/CSS/JS deliverable.</p>
+          <h5>What's inside</h5>
+          <ul>
+            <li>A 9-screen onboarding flow</li>
+            <li>A 5-tab interactive dashboard</li>
+            <li>An accompanying animated user journey map document</li>
+          </ul>
+        </div>
+        <div class="case-col">
+          <h5>Preview</h5>
+          <div class="phone-mock">
+            <div class="phone">
+              <div class="bar accent"></div>
+              <div class="bar short"></div>
+              <div class="bar"></div>
+              <div class="bar short"></div>
+              <div class="tabs"><span class="active"></span><span></span><span></span><span></span><span></span></div>
+            </div>
+            <div class="phone">
+              <div class="bar"></div>
+              <div class="bar accent short"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="tabs"><span></span><span class="active"></span><span></span><span></span><span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block ops-block">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="idx">03</span>
+      <h2>Education &amp; Certifications</h2>
+      <span class="section-sub">Ongoing + completed</span>
+    </div>
+
+    <div class="reveal">
+      <div class="ed-row">
+        <div class="org">Maseno University</div>
+        <div class="detail">Bachelor of Science in Computer Science</div>
+        <div class="when">2018–2022</div>
+      </div>
+      <div class="ed-row">
+        <div class="org">College of Insurance</div>
+        <div class="detail">Diploma in Insurance — ongoing</div>
+        <div class="when">Jul 2026–</div>
+      </div>
+      <div class="ed-row">
+        <div class="org">Young Insurance Professional Program</div>
+        <div class="detail">Ongoing</div>
+        <div class="when">Jan 2026–</div>
+      </div>
+      <div class="ed-row">
+        <div class="org">CISCO Networking Academy</div>
+        <div class="detail">CCNA (Networks, Routing &amp; Switching, Scaling) · IT Essentials</div>
+        <div class="when">2022</div>
+      </div>
+      <div class="ed-row">
+        <div class="org">Udemy</div>
+        <div class="detail">Agile Methodologies · Microsoft Azure · Information System Audit (ongoing)</div>
+        <div class="when">2024–25</div>
+      </div>
+    </div>
+
+    <div class="chip-row reveal">
+      <span class="chip">SQL</span>
+      <span class="chip">Power BI</span>
+      <span class="chip">Excel · VBA</span>
+      <span class="chip">Figma</span>
+      <span class="chip">Python</span>
+      <span class="chip">KYC / AML</span>
+      <span class="chip">EDI Claims</span>
+      <span class="chip">Agile / Scrum</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="stamp-mark">Approved for review</div>
+    <div class="contact-row">
+      <a href="mailto:wycliffopereod@gmail.com">wycliffopereod@gmail.com</a>
+      <a href="https://linkedin.com/in/wycliff-opere" target="_blank" rel="noopener">linkedin.com/in/wycliff-opere</a>
+    </div>
+    <div class="fine">Nairobi, Kenya</div>
+  </div>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(el => io.observe(el));
+  } else {
+    els.forEach(el => el.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
